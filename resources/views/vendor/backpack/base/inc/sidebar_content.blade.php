@@ -9,3 +9,5 @@
       <li><a href="{{ backpack_url('permission') }}"><i class="fa fa-key"></i> <span>Permissions</span></a></li>
     </ul>
   </li>
+
+<li><a href='{{ backpack_url('office') }}'><i class='fa fa-square'></i> <span>Offices</span></a></li>
