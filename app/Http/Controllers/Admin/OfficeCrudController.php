@@ -8,6 +8,7 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 use App\Http\Requests\OfficeRequest as StoreRequest;
 use App\Http\Requests\OfficeRequest as UpdateRequest;
 use Backpack\CRUD\CrudPanel;
+use PragmaRX\Countries\Package\Countries;
 
 /**
  * Class OfficeCrudController
@@ -36,42 +37,22 @@ class OfficeCrudController extends CrudController
         // Fields and Columns
         $this->crud->setColumns(['name', 'country', 'city', 'address', 'phone']);
 
-        // TODO $this->crud->addField();
+        // Fields
         $this->crud->addField([
           'name' => 'name',
-          'type' => 'text',
           'label' => 'Office Name',
-        ]);
-        $this->crud->addField([
-          'label' => 'Country',
-          'type' => 'select',
-          'name' => 'Country',
-          'entity' => 'country',
-          'attribute' => 'name'
-        ]);
-        /*
-        $this->crud->addField([    // SELECT2
-            'label'         => ‘Category',
-            'type'          => 'select',
-            'name'          => ‘category',
-            'entity'        => 'category',
-            'attribute'     => 'name',
+          'type' => 'text',
         ]);
 
-        $this->crud->addField([ // select2_from_ajax: 1-n relationship
-            'label'                => "Article", // Table column heading
-            'type'                 => 'select2_from_ajax_multiple',
-            'name'                 => ‘articles', // the column that contains the ID of that connected entity;
-            'entity'               => 'article', // the method that defines the relationship in your Model
-            'attribute'            => 'title', // foreign key attribute that is shown to user
-            'data_source'          => url('api/article'), // url to controller search function (with /{id} should return model)
-            'placeholder'          => 'Select an article', // placeholder for the select
-            'minimum_input_length' => 0, // minimum characters to type before querying results
-            'dependencies'         => [‘category’], // when a dependency changes, this select2 is reset to null
-            // ‘method'                    => ‘GET’, // optional - HTTP method to use for the AJAX call (GET, POST)
-        ]);
-        */
-
+        $this->crud->addField(
+          [   // select_from_array
+            'name' => 'country',
+            'label' => "Country",
+            'type' => 'select2_from_array',
+            'options' => Countries::all()->pluck('name.common'),
+            'allows_null' => false,
+            // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
+          ]);
 
         // add asterisk for fields that are required in OfficeRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
