@@ -16,10 +16,10 @@ class Account extends Model
     */
 
     protected $table = 'accounts';
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = [];
+    protected $primaryKey = 'id';
+    public $timestamps = true
+    protected $guarded = [];
+    // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
 
