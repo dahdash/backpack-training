@@ -35,6 +35,16 @@ class Office extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function suppliers()
+    {
+        return $this->belongsToMany('App\Models\Supplier');
+    }
+
+    public function accounts()
+    {
+        return $this->hasMany('App\Models\Account');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

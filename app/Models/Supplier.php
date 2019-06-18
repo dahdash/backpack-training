@@ -35,6 +35,11 @@ class Supplier extends Model
     |--------------------------------------------------------------------------
     */
 
+    public function offices()
+    {
+        return $this->belongsToMany('App\Models\Office');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
