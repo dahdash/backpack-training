@@ -17,7 +17,7 @@ class Account extends Model
 
     protected $table = 'accounts';
     protected $primaryKey = 'id';
-    public $timestamps = true
+    public $timestamps = true;
     protected $guarded = [];
     // protected $fillable = [];
     // protected $hidden = [];
