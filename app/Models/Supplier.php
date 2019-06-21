@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
-class Office extends Model
+class Supplier extends Model
 {
     use CrudTrait;
 
@@ -15,11 +15,11 @@ class Office extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'offices';
+    protected $table = 'suppliers';
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $guarded = [];
-    // protected $fillable = ['name', 'country', 'city', 'address', 'phone'];
+    // protected $fillable = ['name'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -35,14 +35,9 @@ class Office extends Model
     |--------------------------------------------------------------------------
     */
 
-    public function suppliers()
+    public function offices()
     {
-        return $this->belongsToMany('App\Models\Supplier');
-    }
-
-    public function accounts()
-    {
-        return $this->hasMany('App\Models\Account');
+        return $this->belongsToMany('App\Models\Office');
     }
 
     /*

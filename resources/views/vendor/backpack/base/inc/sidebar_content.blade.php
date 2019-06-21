@@ -11,3 +11,7 @@
   </li>
 
 <li><a href='{{ backpack_url('office') }}'><i class='fa fa-square'></i> <span>Offices</span></a></li>
+
+<li><a href='{{ backpack_url('supplier') }}'><i class='fa fa-circle'></i> <span>Suppliers</span></a></li>
+
+<li><a href='{{ backpack_url('account') }}'><i class='fa fa-wallet'></i> <span>Accounts</span></a></li>
