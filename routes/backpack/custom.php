@@ -12,4 +12,7 @@ Route::group([
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
     CRUD::resource('office', 'OfficeCrudController');
+
+    Route::post('/api/country', 'Api\CountryCityFetchController@fetch');
+
 }); // this should be the absolute last line of this file

@@ -18,7 +18,7 @@ class Office extends Model
     protected $table = 'offices';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
-    // protected $guarded = ['id'];
+    protected $guarded = ['id', 'created_at', 'updated_at'];
     protected $fillable = ['name', 'country', 'city', 'address', 'phone'];
     // protected $hidden = [];
     // protected $dates = [];

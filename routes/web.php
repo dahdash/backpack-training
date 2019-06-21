@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return redirect()->route('backpack');
 });
+
+Route::get('/countries', 'CountriesPackageTinkerController@index');
