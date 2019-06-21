@@ -16,10 +16,10 @@ class Office extends Model
     */
 
     protected $table = 'offices';
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name', 'country', 'city', 'address', 'phone'];
+    protected $primaryKey = 'id';
+    public $timestamps = true;
+    protected $guarded = [];
+    // protected $fillable = ['name', 'country', 'city', 'address', 'phone'];
     // protected $hidden = [];
     // protected $dates = [];
 

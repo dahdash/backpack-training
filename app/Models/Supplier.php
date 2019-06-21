@@ -18,8 +18,8 @@ class Supplier extends Model
     protected $table = 'suppliers';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    // protected $guarded = ['id'];
-    protected $fillable = ['name'];
+    protected $guarded = [];
+    // protected $fillable = ['name'];
     // protected $hidden = [];
     // protected $dates = [];
 
