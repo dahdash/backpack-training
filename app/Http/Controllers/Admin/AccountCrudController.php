@@ -33,8 +33,109 @@ class AccountCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
 
-        // TODO: remove setFromDb() and manually define Fields and Columns
-        $this->crud->setFromDb();
+        //Columns
+
+        $this->crud->addColumn([
+                'label' => 'Office Name',
+                'type' => 'select',
+                'name' => 'office_id',
+                'entity' => 'office',
+                'attribute' => "name",
+                'model' => "App\Models\Account",
+        ]);
+
+
+        $this->crud->addcolumns([
+
+            [   
+                'label' => 'Account Name',
+                'name' => 'name',
+                'type' => 'text'
+            ],
+
+            [   
+                'label' => 'Opening Balance',
+                'name' => 'opening_balance',
+                'type' => 'number',
+                'decimals' => 2,
+            ],
+
+            [   
+                'label' => 'Bank Name',
+                'name' => 'bank_name',
+                'type' => 'text'
+            ],
+
+            [   
+                'label' => 'Bank Phone',
+                'name' => 'bank_phone',
+                'type' => 'number'
+            ],
+
+            [   
+                'label' => 'Bank Address',
+                'name' => 'bank_address',
+                'type' => 'text'
+            ],
+
+            [   
+                'label' => 'Status',
+                'name' => 'enabled',
+                'type' => 'check'
+            ]
+
+
+        ]);
+
+        //Fields
+
+        $this->crud->addField([
+                'label' => "Office Name",
+                'type' => "select2",
+                'name' => 'office_id',
+                'entity' => 'office',
+                'attribute' => "name",
+                'model' => "App\Models\Office",
+        ]);
+
+        $this->crud->addFields([
+            [
+                'label' => 'Account Name',
+                'name' => 'name',
+                'type' => 'text'
+            ],
+
+            [
+                'label' => 'Opening Balance',
+                'name' => 'opening_balance',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
+            ],
+
+            [
+                'label' => 'Bank Name',
+                'name' => 'bank_name',
+                'type' => 'text'
+            ],
+
+            [
+                'label' => 'Bank Phone',
+                'name' => 'bank_phone',
+                'type' => 'number',
+            ],
+
+            [
+                'label' => 'Bank Address',
+                'name' => 'bank_address',
+                'type' => 'text'
+            ],
+
+            [
+                'label' => 'Enabled',
+                'name' => 'enabled',
+                'type' => 'checkbox'
+            ]
+        ]);
 
         // add asterisk for fields that are required in AccountRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
