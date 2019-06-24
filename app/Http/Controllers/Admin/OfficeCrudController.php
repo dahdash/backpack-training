@@ -50,20 +50,75 @@ class OfficeCrudController extends CrudController
           'name' => 'name',
           'label' => 'Office Name',
           'type' => 'text',
+          'attributes' => [
+             'placeholder' => 'Office Name',
+             'required' => 'required'
+           ]
         ]);
+
+        $countryOptions = Countries::all()->where('geo.region', 'Europe')->pluck('name.common');
+        $associativeCountryOptionsArray = $countryOptions->combine($countryOptions)->toArray();
+        $associativeCountryOptionsArray = ['' => '--choose a country--'] + $associativeCountryOptionsArray;
+        $this->crud->addField(
+          [   // select_from_array_ajax
+            'name' => 'country',
+            'label' => "Country",
+            'type' => 'select2_from_array_ajax',
+            'options' => $associativeCountryOptionsArray,
+            'allows_null' => false,
+            'dependant_field' => 'city',
+            'attributes' => ['required' => 'required']
+
+            // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
+          ]);
+
 
         $this->crud->addField(
           [   // select_from_array
-            'name' => 'country',
-            'label' => "Country",
+            'name' => 'city',
+            'label' => "City",
             'type' => 'select2_from_array',
-            'options' => Countries::all()->pluck('name.common'),
+            'options' => ['' => '--no country selected--'],
             'allows_null' => false,
+            'attributes' => ['required' => 'required']
             // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
           ]);
+<<<<<<< HEAD
+=======
+
+        $this->crud->addField(
+          [ // Textarea
+              'name' => 'address',
+              'label' => "Address",
+              'type' => 'textarea',
+
+              // optional
+              'attributes' => [
+                 'placeholder' => 'Address',
+                 'style' => 'resize: none;',
+                 'required' => 'required'
+               ]
+          ]);
+
+        $this->crud->addField(
+          [   // Number
+            'name' => 'phone',
+            'label' => 'Phone Number',
+            'type' => 'number',
+            // optionals
+            'attributes' => [
+              // "step" => "any",
+              'placeholder' => '123456789',
+              'required' => 'required',
+            ], // allow decimals
+            // 'prefix' => "$",
+            // 'suffix' => ".00",
+          ]);
+
+>>>>>>> 926ab148fc2545678d17e87e96ea094b6fdfae28
         // add asterisk for fields that are required in OfficeRequest
-        $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
+        $this->crud->setRequiredFields(StoreRequest::class, 'create');
     }
 
     public function store(StoreRequest $request)
@@ -104,6 +159,9 @@ class OfficeCrudController extends CrudController
         */
         $this->crud->removeField('name');
         $this->crud->removeField('country');
+        $this->crud->removeField('city');
+        $this->crud->removeField('address');
+        $this->crud->removeField('phone');
         $this->crud->addField(
           [
             'label' => "Suppliers",

@@ -18,4 +18,7 @@ Route::group([
         });
     CRUD::resource('supplier', 'SupplierCrudController');
     CRUD::resource('account', 'AccountCrudController');
-}); // this should be the absolute last line of this file
+
+    Route::post('/api/country', 'Api\CountryCityFetchController@fetch');
+
+  }); // this should be the absolute last line of this file
