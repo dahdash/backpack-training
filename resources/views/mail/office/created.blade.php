@@ -3,7 +3,7 @@
 The office with name
 {{ $newOffice->name }}
 was created.
-@component('mail::button', ['url' => '/admin/office'])
+@component('mail::button', ['url' => '/admin/office/'.$newOffice->id.'/edit'])
 Show office
 @endcomponent
 
