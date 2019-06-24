@@ -83,8 +83,7 @@ class OfficeCrudController extends CrudController
             'attributes' => ['required' => 'required']
             // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
           ]);
-<<<<<<< HEAD
-=======
+
 
         $this->crud->addField(
           [ // Textarea
@@ -115,7 +114,6 @@ class OfficeCrudController extends CrudController
             // 'suffix' => ".00",
           ]);
 
->>>>>>> 926ab148fc2545678d17e87e96ea094b6fdfae28
         // add asterisk for fields that are required in OfficeRequest
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
