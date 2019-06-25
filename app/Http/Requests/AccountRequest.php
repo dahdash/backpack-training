@@ -25,9 +25,11 @@ class AccountRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            // 'name' => 'required|min:5|max:255'
-        ];
+        return [   
+             'name' => 'required|min:2|max:255',
+             'opening_balance' => 'required|numeric|between:0,999999999999999.99',
+             'bank_phone' => 'starts_with:+,0|nullable',
+            ];
     }
 
     /**

@@ -7,8 +7,11 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 // VALIDATION: change the requests to match your own file names if you need form validation
 use App\Http\Requests\OfficeRequest as StoreRequest;
 use App\Http\Requests\OfficeRequest as UpdateRequest;
+
 use Backpack\CRUD\CrudPanel;
 use PragmaRX\Countries\Package\Countries;
+use App\Notifications\OfficeCreated;
+
 
 /**
  * Class OfficeCrudController
@@ -27,6 +30,8 @@ class OfficeCrudController extends CrudController
         $this->crud->setModel('App\Models\Office');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/office');
         $this->crud->setEntityNameStrings('office', 'offices');
+        $this->crud->denyAccess('delete');
+
 
 
         /*
@@ -79,6 +84,7 @@ class OfficeCrudController extends CrudController
             // 'allows_multiple' => true, // OPTIONAL; needs you to cast this to array in your model;
           ]);
 
+
         $this->crud->addField(
           [ // Textarea
               'name' => 'address',
@@ -117,6 +123,9 @@ class OfficeCrudController extends CrudController
     {
         // your additional operations before save here
         $redirect_location = parent::storeCrud($request);
+        $newOffice = $this->data['entry'];
+        auth()->user()->notify(new OfficeCreated($newOffice));
+
         // your additional operations after save here
         // use $this->data['entry'] or $this->crud->entry
         return $redirect_location;
@@ -136,7 +145,6 @@ class OfficeCrudController extends CrudController
         $this->crud->hasAccessOrFail('update');
         $this->crud->setOperation('OfficeSuppliers');
         $this->crud->settitle('Supllier for choosen office');
-        $this->crud->setOperation('show');
         $this->crud->setSubheading('Suplliers');
         $this->crud->setHeading('');
 
@@ -187,10 +195,7 @@ class OfficeCrudController extends CrudController
       $this->crud->hasAccessOrFail('update');
       $this->data['entry'] = $this->crud->getEntry($id);
 
-      // fallback to global request instance
-      if (is_null($request)) {
-          $request = \Request::instance();
-      }
+
 
       $this->data['entry']->suppliers()->sync($request->suppliers);
 

@@ -26,6 +26,7 @@ class AccountCrudController extends CrudController
         $this->crud->setModel('App\Models\Account');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/account');
         $this->crud->setEntityNameStrings('account', 'accounts');
+        $this->crud->denyAccess('delete');
 
         /*
         |--------------------------------------------------------------------------
@@ -33,8 +34,113 @@ class AccountCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
 
-        // TODO: remove setFromDb() and manually define Fields and Columns
-        $this->crud->setFromDb();
+        //Columns
+
+        $this->crud->addColumn([
+                'label' => 'Office Name',
+                'type' => 'select',
+                'name' => 'office_id',
+                'entity' => 'office',
+                'attribute' => "name",
+                'model' => "App\Models\Account",
+        ]);
+
+
+        $this->crud->addcolumns([
+
+            [
+                'label' => 'Account Name',
+                'name' => 'name',
+                'type' => 'text',
+            ],
+
+            [
+                'label' => 'Opening Balance',
+                'name' => 'opening_balance',
+                'type' => 'number',
+                'decimals' => 2,
+            ],
+
+            [
+                'label' => 'Bank Name',
+                'name' => 'bank_name',
+                'type' => 'text',
+                'visibleInTable' => false,
+            ],
+
+            [
+                'label' => 'Bank Phone',
+                'name' => 'bank_phone',
+                'type' => 'number',
+                'visibleInTable' => false,
+            ],
+
+            [
+                'label' => 'Bank Address',
+                'name' => 'bank_address',
+                'type' => 'text',
+                'visibleInTable' => false,
+            ],
+
+
+        ]);
+
+
+        // ------ CRUD DETAILS ROW
+        $this->crud->enableDetailsRow();
+        $this->crud->allowAccess('details_row');
+        $this->crud->setDetailsRowView('vendor.backpack.crud.details_row.account');
+
+        //Fields
+
+        $this->crud->addField([
+                'label' => "Office Name",
+                'type' => "select2",
+                'name' => 'office_id',
+                'entity' => 'office',
+                'attribute' => "name",
+                'model' => "App\Models\Office",
+        ]);
+
+        $this->crud->addFields([
+            [
+                'label' => 'Account Name',
+                'name' => 'name',
+                'type' => 'text'
+            ],
+
+            [
+                'label' => 'Opening Balance',
+                'name' => 'opening_balance',
+                'type' => 'number',
+                'attributes' => ["step" => "any"],
+            ],
+
+            [
+                'label' => 'Bank Name',
+                'name' => 'bank_name',
+                'type' => 'text'
+            ],
+
+            [
+                'label' => 'Bank Phone',
+                'name' => 'bank_phone',
+                'type' => 'number',
+            ],
+
+            [
+                'label' => 'Bank Address',
+                'name' => 'bank_address',
+                'type' => 'text'
+            ],
+
+         
+            [
+                'name'  => 'enabled',
+                'label' => 'Status',
+                'type'  => 'toggle_switch',
+            ],     
+        ]);
 
         // add asterisk for fields that are required in AccountRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
