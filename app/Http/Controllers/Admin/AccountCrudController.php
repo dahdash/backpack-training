@@ -26,6 +26,7 @@ class AccountCrudController extends CrudController
         $this->crud->setModel('App\Models\Account');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/account');
         $this->crud->setEntityNameStrings('account', 'accounts');
+        $this->crud->denyAccess('delete');
 
         /*
         |--------------------------------------------------------------------------
@@ -81,12 +82,6 @@ class AccountCrudController extends CrudController
                 'visibleInTable' => false,
             ],
 
-            [
-                'label' => 'Status',
-                'name' => 'enabled',
-                'type' => 'check'
-            ]
-
 
         ]);
 
@@ -139,11 +134,12 @@ class AccountCrudController extends CrudController
                 'type' => 'text'
             ],
 
+         
             [
-                'label' => 'Enabled',
-                'name' => 'enabled',
-                'type' => 'checkbox'
-            ]
+                'name'  => 'enabled',
+                'label' => 'Status',
+                'type'  => 'toggle_switch',
+            ],     
         ]);
 
         // add asterisk for fields that are required in AccountRequest
