@@ -26,6 +26,9 @@ class AccountCrudController extends CrudController
         $this->crud->setModel('App\Models\Account');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/account');
         $this->crud->setEntityNameStrings('account', 'accounts');
+        $this->crud->addButtonFromView('line', 'Status', 'status', 'beginning');
+
+
 
         /*
         |--------------------------------------------------------------------------
@@ -159,4 +162,17 @@ class AccountCrudController extends CrudController
         // use $this->data['entry'] or $this->crud->entry
         return $redirect_location;
     }
+
+    public function status($id)
+    {
+        $this->crud->hasAccessOrFail('update');
+        $this->crud->setOperation('AccountStatus');
+        $this->data['entry'] = $this->crud->getEntry($id);
+        $this->data['entry']->enabled = $this->data['entry']->enabled == 1 ? 0 : 1;
+        $this->data['entry']->save();
+        \Alert::success('Account '.'"'.$this->data['entry']->name.'"'.' was'.($this->data['entry']->enabled
+        == 0 ? ' disabeled':' enabled'))->flash();
+
+        return back();
+  }
 }

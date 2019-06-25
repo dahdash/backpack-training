@@ -15,10 +15,13 @@ Route::group([
         // add extra routes to this resource
         Route::get('office/{id}/suppliers', 'OfficeCrudController@getOfficeSuppliers');
         Route::post('office/{id}/suppliers', 'OfficeCrudController@postOfficeSuppliers');
+        Route::post('/api/country', 'Api\CountryCityFetchController@fetch');
+        });
+    CRUD::resource('account', 'AccountCrudController')->with(function(){
+        Route::get('account/{id}/status', 'AccountCrudController@status');
         });
     CRUD::resource('supplier', 'SupplierCrudController');
-    CRUD::resource('account', 'AccountCrudController');
 
-    Route::post('/api/country', 'Api\CountryCityFetchController@fetch');
+
 
   }); // this should be the absolute last line of this file
