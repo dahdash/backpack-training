@@ -7,6 +7,8 @@ use Backpack\CRUD\app\Http\Controllers\CrudController;
 // VALIDATION: change the requests to match your own file names if you need form validation
 use App\Http\Requests\OfficeRequest as StoreRequest;
 use App\Http\Requests\OfficeRequest as UpdateRequest;
+use App\Http\Requests\OfficeSupplierRequest;
+
 
 use Backpack\CRUD\CrudPanel;
 use PragmaRX\Countries\Package\Countries;
@@ -31,6 +33,7 @@ class OfficeCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/office');
         $this->crud->setEntityNameStrings('office', 'offices');
         $this->crud->denyAccess('delete');
+        // $this->crud->allowAccess('show);
 
 
 
@@ -190,13 +193,10 @@ class OfficeCrudController extends CrudController
         return view('vendor.backpack.crud.officeSuppliers', $this->data);
     }
 
-    public function  postOfficeSuppliers(UpdateRequest $request,$id)
+    public function  postOfficeSuppliers(OfficeSupplierRequest $request,$id)
     {
       $this->crud->hasAccessOrFail('update');
       $this->data['entry'] = $this->crud->getEntry($id);
-
-
-
       $this->data['entry']->suppliers()->sync($request->suppliers);
 
       \Alert::success('Suppliers added.')->flash();
