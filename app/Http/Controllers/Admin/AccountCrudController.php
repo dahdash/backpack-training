@@ -50,7 +50,7 @@ class AccountCrudController extends CrudController
             [
                 'label' => 'Account Name',
                 'name' => 'name',
-                'type' => 'text'
+                'type' => 'text',
             ],
 
             [
@@ -63,19 +63,22 @@ class AccountCrudController extends CrudController
             [
                 'label' => 'Bank Name',
                 'name' => 'bank_name',
-                'type' => 'text'
+                'type' => 'text',
+                'visibleInTable' => false,
             ],
 
             [
                 'label' => 'Bank Phone',
                 'name' => 'bank_phone',
-                'type' => 'number'
+                'type' => 'number',
+                'visibleInTable' => false,
             ],
 
             [
                 'label' => 'Bank Address',
                 'name' => 'bank_address',
-                'type' => 'text'
+                'type' => 'text',
+                'visibleInTable' => false,
             ],
 
             [
@@ -86,6 +89,12 @@ class AccountCrudController extends CrudController
 
 
         ]);
+
+
+        // ------ CRUD DETAILS ROW
+        $this->crud->enableDetailsRow();
+        $this->crud->allowAccess('details_row');
+        $this->crud->setDetailsRowView('vendor.backpack.crud.details_row.account');
 
         //Fields
 
