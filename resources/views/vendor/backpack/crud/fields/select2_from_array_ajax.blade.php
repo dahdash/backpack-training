@@ -1,4 +1,11 @@
-<!-- select2 from array -->
+<!-- select2 from array ajax -->
+@php
+  if ($crud->actionIs('create')) {
+    $old_dependant_value = old($field['dependant_field']) ?? '';
+  } elseif ($crud->actionIs('edit')) {
+    $old_dependant_value = old($field['dependant_field']) ?? $crud->getEntry($id)->city ?? '';
+  }
+@endphp
 <div @include('crud::inc.field_wrapper_attributes') >
     <label>{!! $field['label'] !!}</label>
     <select
@@ -85,8 +92,24 @@
     // Sending selected option to view
 
       $('document').ready(function (){
-
         var selectedOption = $('select[name={{ $field['name'] }}] :selected').text();
+        var old_dependant_value = "<?php echo $old_dependant_value; ?>";
+
+          if($('select[name={{ $field['name'] }}] :selected').val() !== ''){
+            $.ajax({
+              url: "/admin/api/{{ $field['name'] }}",
+              method: "POST",
+              data: {selectedOption:selectedOption},
+              success:function (dependantFieldOptions)
+              {
+                $('select[name={{ $field['dependant_field'] }}]').html(dependantFieldOptions);
+                $('select[name={{ $field['dependant_field'] }}]').val(old_dependant_value);
+              }
+            });
+          }
+          else {
+            $('select[name={{ $field['dependant_field'] }}]').html('<option>--no {{ $field['name'] }} selected--</option>');
+          }
 
         $('select[name={{ $field['name'] }}]').change( function() {
           selectedOption = $('select[name={{ $field['name'] }}] :selected').text();
@@ -102,7 +125,7 @@
             });
           }
           else {
-            $('select[name={{ $field['dependant_field'] }}]').html('<option>--no country selected--</option>');
+            $('select[name={{ $field['dependant_field'] }}]').html('<option>--no {{ $field['name'] }} selected--</option>');
           }
         });
       });
