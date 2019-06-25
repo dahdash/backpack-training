@@ -30,7 +30,7 @@ class OfficeRequest extends FormRequest
             'country' => 'required',
             'city' => 'required',
             'address' => 'required|max:255',
-            'phone' => 'required|numeric'
+            'phone' => 'required|integer'
         ];
     }
 

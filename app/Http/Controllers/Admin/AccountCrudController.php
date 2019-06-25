@@ -27,6 +27,7 @@ class AccountCrudController extends CrudController
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/account');
         $this->crud->setEntityNameStrings('account', 'accounts');
         $this->crud->addButtonFromView('line', 'Status', 'status', 'beginning');
+        $this->crud->denyAccess('delete');
 
 
 
@@ -53,7 +54,7 @@ class AccountCrudController extends CrudController
             [
                 'label' => 'Account Name',
                 'name' => 'name',
-                'type' => 'text'
+                'type' => 'text',
             ],
 
             [
@@ -66,29 +67,32 @@ class AccountCrudController extends CrudController
             [
                 'label' => 'Bank Name',
                 'name' => 'bank_name',
-                'type' => 'text'
+                'type' => 'text',
+                'visibleInTable' => false,
             ],
 
             [
                 'label' => 'Bank Phone',
                 'name' => 'bank_phone',
-                'type' => 'number'
+                'type' => 'number',
+                'visibleInTable' => false,
             ],
 
             [
                 'label' => 'Bank Address',
                 'name' => 'bank_address',
-                'type' => 'text'
+                'type' => 'text',
+                'visibleInTable' => false,
             ],
-
-            [
-                'label' => 'Status',
-                'name' => 'enabled',
-                'type' => 'check'
-            ]
 
 
         ]);
+
+
+        // ------ CRUD DETAILS ROW
+        $this->crud->enableDetailsRow();
+        $this->crud->allowAccess('details_row');
+        $this->crud->setDetailsRowView('vendor.backpack.crud.details_row.account');
 
         //Fields
 
@@ -133,11 +137,12 @@ class AccountCrudController extends CrudController
                 'type' => 'text'
             ],
 
+
             [
-                'label' => 'Enabled',
-                'name' => 'enabled',
-                'type' => 'checkbox'
-            ]
+                'name'  => 'enabled',
+                'label' => 'Status',
+                'type'  => 'toggle_switch',
+            ],
         ]);
 
         // add asterisk for fields that are required in AccountRequest
