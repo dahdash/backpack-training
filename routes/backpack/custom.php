@@ -11,4 +11,14 @@ Route::group([
     'middleware' => ['web', config('backpack.base.middleware_key', 'admin')],
     'namespace'  => 'App\Http\Controllers\Admin',
 ], function () { // custom admin routes
-}); // this should be the absolute last line of this file
+    CRUD::resource('office', 'OfficeCrudController')->with(function(){
+        // add extra routes to this resource
+        Route::get('office/{id}/suppliers', 'OfficeCrudController@getOfficeSuppliers');
+        Route::post('office/{id}/suppliers', 'OfficeCrudController@postOfficeSuppliers');
+        });
+    CRUD::resource('supplier', 'SupplierCrudController');
+    CRUD::resource('account', 'AccountCrudController');
+
+    Route::post('/api/country', 'Api\CountryCityFetchController@fetch');
+
+  }); // this should be the absolute last line of this file
